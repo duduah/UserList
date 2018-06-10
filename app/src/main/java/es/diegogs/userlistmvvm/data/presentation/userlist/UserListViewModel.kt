@@ -15,6 +15,9 @@ class UserListViewModel : BaseViewModel() {
     // Para enviar la lista de usuarios a la vista:
     val userListState: MutableLiveData<List<UserEntity>> = MutableLiveData()
 
+    val isLoadingState: MutableLiveData<Boolean> = MutableLiveData()
+
+
     // TODO: mejorar las dependencias
     private val fakeDataSource = UserFakeDataSource()
     private val userRepository = UserRepository(fakeDataSource)
@@ -23,6 +26,8 @@ class UserListViewModel : BaseViewModel() {
         userRepository.getUserList()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe { isLoadingState.postValue(true)}
+                .doOnTerminate { isLoadingState.postValue(false)}
                 .subscribeBy(
                         onNext = {
                             userListState.value = it
