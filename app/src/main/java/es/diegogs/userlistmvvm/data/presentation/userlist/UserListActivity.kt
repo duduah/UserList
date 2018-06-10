@@ -57,4 +57,10 @@ class UserListActivity : AppCompatActivity() {
     private fun showLoading(isLoading: Boolean) {
         userListLoading.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
+
+    override fun onResume() {
+        super.onResume()
+        userListViewModel.loadUserList()
+    }
+
 }
