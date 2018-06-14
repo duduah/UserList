@@ -11,6 +11,10 @@ import io.reactivex.schedulers.Schedulers
 
 class UserListViewModel : BaseViewModel() {
 
+    companion object {
+        const val PREF_FIRST_LOAD = "PREF_FIRST_LOAD"
+    }
+
     // Para enviar la lista de usuarios a la vista:
     val userListState: MutableLiveData<List<UserEntity>> = MutableLiveData()
     val isLoadingState: MutableLiveData<Boolean> = MutableLiveData()
@@ -28,6 +32,11 @@ class UserListViewModel : BaseViewModel() {
                         },
                         onError = {
 
+                        },
+                        onComplete = {
+                            Inject.sharedPreferences.edit()
+                                    .putBoolean(PREF_FIRST_LOAD, false)
+                                    .apply()
                         }
                 )
                 .addTo(compositeDisposable)
