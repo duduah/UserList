@@ -1,4 +1,4 @@
-package es.diegogs.userlistmvvm.data.util.mvvm
+package es.diegogs.userlistmvvm.util.mvvm
 
 import android.arch.lifecycle.ViewModel
 import io.reactivex.disposables.CompositeDisposable

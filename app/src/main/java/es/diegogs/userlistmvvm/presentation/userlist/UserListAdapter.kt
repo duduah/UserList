@@ -1,4 +1,4 @@
-package es.diegogs.userlistmvvm.data.presentation.userlist
+package es.diegogs.userlistmvvm.presentation.userlist
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
