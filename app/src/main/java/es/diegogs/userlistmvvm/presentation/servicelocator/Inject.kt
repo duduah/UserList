@@ -1,13 +1,13 @@
 package es.diegogs.userlistmvvm.presentation.servicelocator
 
-import android.content.SharedPreferences
 import es.diegogs.userlistmvvm.data.repository.UserRepository
 import es.diegogs.userlistmvvm.data.repository.datasource.UserFakeDataSource
 import es.diegogs.userlistmvvm.data.repository.datasource.UserFakeDataSource2
+import es.diegogs.userlistmvvm.util.SettingsManager
 
 object Inject {
 
-    lateinit var sharedPreferences: SharedPreferences
+    lateinit var settingsManager: SettingsManager
 
     val fakeDataSource = UserFakeDataSource()
     val fakeDataSource2 = UserFakeDataSource2()
