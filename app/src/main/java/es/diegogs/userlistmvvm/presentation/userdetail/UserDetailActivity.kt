@@ -3,6 +3,8 @@ package es.diegogs.userlistmvvm.presentation.userdetail
 import android.app.Activity
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.bumptech.glide.Glide
@@ -14,6 +16,12 @@ class UserDetailActivity: AppCompatActivity() {
 
     companion object {
         const val PARAM_USER_ID = "PARAM_USER_ID"
+
+        fun intent(context: Context, userId: Long): Intent {
+            val detailIntent = Intent(context, UserDetailActivity::class.java)
+            detailIntent.putExtra(PARAM_USER_ID, userId)
+            return detailIntent
+        }
     }
 
     lateinit var userDetailViewModel: UserDetailViewModel
