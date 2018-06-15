@@ -11,13 +11,14 @@ import android.view.View
 import es.diegogs.userlistmvvm.R
 import es.diegogs.userlistmvvm.data.model.UserEntity
 import es.diegogs.userlistmvvm.presentation.userdetail.UserDetailActivity
+import es.diegogs.userlistmvvm.util.Navigator
 import kotlinx.android.synthetic.main.activity_main.*
 
 class UserListActivity : AppCompatActivity() {
 
     lateinit var userListViewModel: UserListViewModel
 
-    private val adapter = UserListAdapter{ onUserClick(it) }
+    private val adapter = UserListAdapter{ onUserClicked(it) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,10 +62,8 @@ class UserListActivity : AppCompatActivity() {
         userListLoading.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
-    private fun onUserClick(userEntity: UserEntity) {
-        val intent = Intent(this, UserDetailActivity::class.java)
-        intent.putExtra(UserDetailActivity.PARAM_USER_ID, userEntity.userId)
-        startActivity(intent)
+    private fun onUserClicked(userEntity: UserEntity) {
+        Navigator.openUserDetail(this, userEntity.userId)
     }
 
 }
