@@ -16,6 +16,6 @@ class UserRepository(private val userFakeDataSource: UserFakeDataSource,
 
     fun getUserDetail(userId: Long): Observable<UserEntity> =
             userFakeDataSource.getUserDetail(userId)
-                    .concatWith(userFakeDataSource2.getUserDetail(userId))
+                    .switchIfEmpty(userFakeDataSource2.getUserDetail(userId))
                     .delay(1, TimeUnit.SECONDS)
 }

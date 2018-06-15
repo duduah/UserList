@@ -7,15 +7,23 @@ class UserFakeDataSource2 : UserDataSource {
 
 
     val userList = listOf(
-            UserEntity(1, "Gerry", "https://randomuser.me/api/portraits/men/7.jpg"),
-            UserEntity(2, "Sarah", "https://randomuser.me/api/portraits/women/19.jpg")
+            UserEntity(5, "Gerry", "https://randomuser.me/api/portraits/men/7.jpg"),
+            UserEntity(6, "Sarah", "https://randomuser.me/api/portraits/women/19.jpg")
     )
 
     override fun getUserList(): Observable<List<UserEntity>>
             = Observable.just(userList)
 
-    override fun getUserDetail(userId: Long): Observable<UserEntity> =
-            Observable.just(userList.find { it.userId == userId })
+    override fun getUserDetail(userId: Long): Observable<UserEntity> {
+        val user = userList.find { it.userId == userId }
+
+        return if (user != null) {
+            Observable.just(user)
+        }
+        else {
+            Observable.empty()
+        }
+    }
 }
 
 

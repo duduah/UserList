@@ -9,7 +9,10 @@ import es.diegogs.userlistmvvm.R
 import es.diegogs.userlistmvvm.data.model.UserEntity
 import kotlinx.android.synthetic.main.item_user.view.*
 
-class UserListAdapter : RecyclerView.Adapter<UserListAdapter.UserListViewHolder>() {
+typealias OnUserClick = (userEntity: UserEntity) -> Unit
+
+class UserListAdapter(val onUserClick: OnUserClick)
+    : RecyclerView.Adapter<UserListAdapter.UserListViewHolder>() {
 
     private val items: MutableList<UserEntity> = mutableListOf()
 
@@ -40,6 +43,10 @@ class UserListAdapter : RecyclerView.Adapter<UserListAdapter.UserListViewHolder>
                         .load(userEntity.avatarUrl)
                         .into(userAvatar)
             }
+
+            // itemView.setOnClickListener { onUserClick(items[adapterPosition]) }
+            // itemView.setOnClickListener { onUserClick.invoke(items[adapterPosition]) }
+            itemView.setOnClickListener { onUserClick(userEntity) }
         }
     }
 }

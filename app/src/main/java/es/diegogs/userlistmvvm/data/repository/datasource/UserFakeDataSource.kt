@@ -15,6 +15,14 @@ class UserFakeDataSource : UserDataSource {
     override fun getUserList(): Observable<List<UserEntity>>
             = Observable.just(userList)
 
-    override fun getUserDetail(userId: Long): Observable<UserEntity> =
-            Observable.just(userList.find { it.userId == userId })
+    override fun getUserDetail(userId: Long): Observable<UserEntity> {
+        val user = userList.find { it.userId == userId }
+
+        return if (user != null) {
+            Observable.just(user)
+        }
+        else {
+            Observable.empty()
+        }
+    }
 }
