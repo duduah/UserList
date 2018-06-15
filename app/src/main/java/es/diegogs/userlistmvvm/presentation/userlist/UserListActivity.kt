@@ -2,6 +2,7 @@ package es.diegogs.userlistmvvm.presentation.userlist
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.DefaultItemAnimator
@@ -9,13 +10,14 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import es.diegogs.userlistmvvm.R
 import es.diegogs.userlistmvvm.data.model.UserEntity
+import es.diegogs.userlistmvvm.presentation.userdetail.UserDetailActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class UserListActivity : AppCompatActivity() {
 
     lateinit var userListViewModel: UserListViewModel
 
-    private val adapter = UserListAdapter()
+    private val adapter = UserListAdapter{ onUserClick(it) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,6 +59,12 @@ class UserListActivity : AppCompatActivity() {
 
     private fun showLoading(isLoading: Boolean) {
         userListLoading.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
+    private fun onUserClick(userEntity: UserEntity) {
+        val intent = Intent(this, UserDetailActivity::class.java)
+        intent.putExtra(UserDetailActivity.PARAM_USER_ID, userEntity.userId)
+        startActivity(intent)
     }
 
 }
