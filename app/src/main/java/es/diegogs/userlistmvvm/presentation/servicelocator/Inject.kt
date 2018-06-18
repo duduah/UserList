@@ -1,5 +1,8 @@
 package es.diegogs.userlistmvvm.presentation.servicelocator
 
+import android.arch.persistence.room.Room
+import android.content.Context
+import es.diegogs.userlistmvvm.data.db.UserDataBase
 import es.diegogs.userlistmvvm.data.mapper.UserEntityMapper
 import es.diegogs.userlistmvvm.data.net.UserService
 import es.diegogs.userlistmvvm.data.repository.UserRepository
@@ -11,6 +14,8 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
 object Inject {
+
+    lateinit var database = UserDataBase
 
     val retrofit = Retrofit.Builder()
             .baseUrl("https://randomuser.me/")
@@ -28,4 +33,8 @@ object Inject {
 
     val userRepository = UserRepository(apiDataSource)
 
+    fun initDatabase(context: Context) {
+
+        database = Room.databaseBuilder(context, UserDataBase::class.java, "user.db").build()
+    }
 }
