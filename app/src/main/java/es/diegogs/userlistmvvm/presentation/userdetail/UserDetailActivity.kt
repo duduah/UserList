@@ -1,7 +1,6 @@
 package es.diegogs.userlistmvvm.presentation.userdetail
 
 import android.app.Activity
-import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
@@ -17,37 +16,28 @@ class UserDetailActivity: AppCompatActivity() {
     companion object {
         const val PARAM_USER_ID = "PARAM_USER_ID"
 
-        fun intent(context: Context, userId: Long): Intent {
+        fun intent(context: Context, userEntity: UserEntity): Intent {
             val detailIntent = Intent(context, UserDetailActivity::class.java)
-            detailIntent.putExtra(PARAM_USER_ID, userId)
+            detailIntent.putExtra(PARAM_USER_ID, userEntity)
             return detailIntent
         }
     }
 
     lateinit var userDetailViewModel: UserDetailViewModel
-    var userId: Long = -1
+    var userEntity: UserEntity? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_user_detail)
 
-        userId = intent.getLongExtra(PARAM_USER_ID, -1)
+        userEntity = intent.getParcelableExtra(PARAM_USER_ID)
         init()
     }
 
     private fun init() {
         userDetailViewModel = ViewModelProviders.of(this).get(UserDetailViewModel::class.java)
-        bindEvents()
         loadUserData()
-    }
-
-    private fun bindEvents() {
-        userDetailViewModel.userState.observe(this, Observer {
-            it?.let {
-                onUserLoaded(it)
-            }
-        })
     }
 
     private fun onUserLoaded(userEntity: UserEntity) {
@@ -60,11 +50,11 @@ class UserDetailActivity: AppCompatActivity() {
 
     private fun loadUserData() {
 
-        if (userId == -1L) {
+        if (userEntity == null) {
             setResult(Activity.RESULT_CANCELED)
             finish()
         }
 
-        userDetailViewModel.loadUserById(userId)
+        onUserLoaded(userEntity!!)
     }
 }

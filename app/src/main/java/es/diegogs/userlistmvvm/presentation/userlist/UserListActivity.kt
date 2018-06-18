@@ -63,7 +63,7 @@ class UserListActivity : AppCompatActivity() {
     }
 
     private fun onUserClicked(userEntity: UserEntity) {
-        Navigator.openUserDetail(this, userEntity.userId)
+        Navigator.openUserDetail(this, userEntity)
     }
 
 }

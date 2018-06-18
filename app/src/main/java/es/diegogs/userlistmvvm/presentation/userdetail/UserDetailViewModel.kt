@@ -13,18 +13,5 @@ class UserDetailViewModel : BaseViewModel() {
 
     val userState: MutableLiveData<UserEntity> = MutableLiveData()
 
-    fun loadUserById(userId: Long) {
-        Inject.userRepository.getUserDetail(userId)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeBy(
-                        onNext = {
-                            userState.value = it
-                        },
-                        onError = {
 
-                        }
-                )
-                .addTo(compositeDisposable)
-    }
 }
