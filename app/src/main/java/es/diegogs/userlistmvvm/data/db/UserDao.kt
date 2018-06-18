@@ -5,13 +5,13 @@ import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy
 import android.arch.persistence.room.Query
 import es.diegogs.userlistmvvm.data.model.UserEntity
-import io.reactivex.Flowable
+import io.reactivex.Maybe
 
 @Dao
 abstract class UserDao {
 
     @Query("SELECT * FROM users")
-    abstract fun getAllUsers(): Flowable<List<UserEntity>>
+    abstract fun getAllUsers(): Maybe<List<UserEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract fun insertAll(list: List<UserEntity>)
