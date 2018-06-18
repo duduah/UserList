@@ -7,7 +7,7 @@ import es.diegogs.userlistmvvm.data.mapper.UserEntityMapper
 import es.diegogs.userlistmvvm.data.net.UserService
 import es.diegogs.userlistmvvm.data.repository.UserRepository
 import es.diegogs.userlistmvvm.data.repository.datasource.ApiDataSource
-import es.diegogs.userlistmvvm.data.repository.datasource.UserFakeDataSource
+import es.diegogs.userlistmvvm.data.repository.datasource.LocalDataSource
 import es.diegogs.userlistmvvm.util.SettingsManager
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -15,7 +15,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object Inject {
 
-    lateinit var database = UserDataBase
+    lateinit var database: UserDataBase
 
     val retrofit = Retrofit.Builder()
             .baseUrl("https://randomuser.me/")
@@ -28,13 +28,15 @@ object Inject {
 
     lateinit var settingsManager: SettingsManager
 
-    val fakeDataSource = UserFakeDataSource()
     val apiDataSource = ApiDataSource(userService, userEntityMapper)
 
-    val userRepository = UserRepository(apiDataSource)
+    lateinit var localDataSource: LocalDataSource
+    lateinit var userRepository: UserRepository
 
     fun initDatabase(context: Context) {
 
         database = Room.databaseBuilder(context, UserDataBase::class.java, "user.db").build()
+        localDataSource = LocalDataSource(database)
+        userRepository = UserRepository(localDataSource, apiDataSource)
     }
 }
