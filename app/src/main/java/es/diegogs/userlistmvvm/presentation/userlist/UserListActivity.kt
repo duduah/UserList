@@ -10,22 +10,33 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import es.diegogs.userlistmvvm.R
 import es.diegogs.userlistmvvm.data.model.UserEntity
+import es.diegogs.userlistmvvm.presentation.UserApp
 import es.diegogs.userlistmvvm.presentation.userdetail.UserDetailActivity
 import es.diegogs.userlistmvvm.util.Navigator
 import kotlinx.android.synthetic.main.activity_main.*
+import javax.inject.Inject
 
 class UserListActivity : AppCompatActivity() {
+
+    @Inject
+    lateinit var navigator: Navigator
 
     lateinit var userListViewModel: UserListViewModel
 
     private val adapter = UserListAdapter{ onUserClicked(it) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        inject()
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         setUpRecycler()
         setUpViewModel()
+    }
+
+    private fun inject() {
+        (application as UserApp).component.inject(this)
     }
 
     private fun setUpRecycler() {
@@ -63,7 +74,7 @@ class UserListActivity : AppCompatActivity() {
     }
 
     private fun onUserClicked(userEntity: UserEntity) {
-        Navigator.openUserDetail(this, userEntity)
+        navigator.openUserDetail(this, userEntity)
     }
 
 }

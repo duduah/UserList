@@ -3,12 +3,10 @@ package es.diegogs.userlistmvvm.presentation.userlist
 import android.arch.lifecycle.MutableLiveData
 import android.util.Log
 import es.diegogs.userlistmvvm.data.model.UserEntity
-import es.diegogs.userlistmvvm.presentation.servicelocator.Inject
 import es.diegogs.userlistmvvm.util.mvvm.BaseViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.rxkotlin.addTo
-import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
 class UserListViewModel : BaseViewModel() {
 
@@ -18,7 +16,7 @@ class UserListViewModel : BaseViewModel() {
 
 
     fun loadUserList() {
-        Inject.userRepository.getUserList()
+        /*Inject.userRepository.getUserList()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe { isLoadingState.postValue(true)}
@@ -34,7 +32,7 @@ class UserListViewModel : BaseViewModel() {
                             Inject.settingsManager.firstLoad = false
                         }
                 )
-                .addTo(compositeDisposable)
+                .addTo(compositeDisposable)*/
 
     }
 }
