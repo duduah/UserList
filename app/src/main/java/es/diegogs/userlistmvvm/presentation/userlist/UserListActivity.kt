@@ -1,6 +1,7 @@
 package es.diegogs.userlistmvvm.presentation.userlist
 
 import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
@@ -20,6 +21,9 @@ class UserListActivity : AppCompatActivity() {
 
     @Inject
     lateinit var navigator: Navigator
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     lateinit var userListViewModel: UserListViewModel
 
@@ -46,7 +50,7 @@ class UserListActivity : AppCompatActivity() {
     }
 
     private fun setUpViewModel() {
-        userListViewModel = ViewModelProviders.of(this).get(UserListViewModel::class.java)
+        userListViewModel = ViewModelProviders.of(this, viewModelFactory).get(UserListViewModel::class.java)
         bindEvents()
         userListViewModel.loadUserList()
     }
