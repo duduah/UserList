@@ -1,6 +1,7 @@
 package es.diegogs.userlistmvvm.presentation.userlist
 
 import android.arch.lifecycle.MutableLiveData
+import android.util.Log
 import es.diegogs.userlistmvvm.data.model.UserEntity
 import es.diegogs.userlistmvvm.presentation.servicelocator.Inject
 import es.diegogs.userlistmvvm.util.mvvm.BaseViewModel
@@ -27,7 +28,7 @@ class UserListViewModel : BaseViewModel() {
                             userListState.value = it
                         },
                         onError = {
-
+                            Log.d("UserViewModel", it.toString())
                         },
                         onComplete = {
                             Inject.settingsManager.firstLoad = false
