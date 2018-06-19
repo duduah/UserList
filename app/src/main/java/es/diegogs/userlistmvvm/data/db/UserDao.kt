@@ -1,9 +1,6 @@
 package es.diegogs.userlistmvvm.data.db
 
-import android.arch.persistence.room.Dao
-import android.arch.persistence.room.Insert
-import android.arch.persistence.room.OnConflictStrategy
-import android.arch.persistence.room.Query
+import android.arch.persistence.room.*
 import es.diegogs.userlistmvvm.data.model.UserEntity
 import io.reactivex.Maybe
 
@@ -16,5 +13,12 @@ abstract class UserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract fun insertAll(list: List<UserEntity>)
 
-    // TODO replace??
+    @Query("DELETE FROM users")
+    abstract fun deleteAllUsers()
+
+    @Transaction
+    open fun removeAndInsertUsers(users: List<UserEntity>) {
+        deleteAllUsers()
+        insertAll(users)
+    }
 }
