@@ -6,8 +6,10 @@ import es.diegogs.userlistmvvm.di.modules.DataModule
 import es.diegogs.userlistmvvm.di.modules.NetModule
 import es.diegogs.userlistmvvm.presentation.userlist.UserListActivity
 import es.diegogs.userlistmvvm.util.mvvm.ViewModelModule
+import javax.inject.Singleton
 
 
+@Singleton
 @Component(modules = [
     ApplicationModule::class,
     NetModule::class,
